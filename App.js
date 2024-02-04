@@ -6,8 +6,6 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 //#endregion
 
-SplashScreen.preventAutoHideAsync();
-
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     regular: require("./src/assets/fonts/Montserrat-Regular.ttf"),
@@ -29,7 +27,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text style={styles.text}>
+        Open up App.js to start working on your app!
+      </Text>
     </View>
   );
 }
@@ -40,5 +40,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    fontFamily: "bold",
   },
 });
