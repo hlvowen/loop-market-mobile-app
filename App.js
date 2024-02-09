@@ -1,10 +1,18 @@
 import { useCallback } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //#region Expo imports
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { Ionicons } from "@expo/vector-icons";
 //#endregion
+
+import { Feed, OrderDetailsModal } from "./src/screens";
+import { BottomTabNavigation, ModalNavigation } from "./src/navigation";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -26,11 +34,28 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-        Open up App.js to start working on your app!
-      </Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Bottom"
+          component={BottomTabNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Modal"
+          component={OrderDetailsModal}
+          options={({ navigation }) => ({
+            presentation: "modal",
+            animation: "slide_from_bottom",
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons name="close-outline" size={28} />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
